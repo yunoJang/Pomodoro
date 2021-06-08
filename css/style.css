@@ -91,7 +91,8 @@ main {
     font-weight: 600;
 }
 
-    .setting-form button:active,input[type=submit]:active {
+    .setting-form input[type=submit]:active {
+        box-shadow: 0 0 3px 3px rgba(50, 50, 50, 0.1), 0 0 5px 2px rgba(50, 50, 50, 0.1);
         transform: scale(0.96);
     }
 
