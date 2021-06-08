@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="clock">
+        <h1 id="title"></h1>
+        <div class="clock-ampm">
+            <span id="am">AM</span>
+            <span id="pm">PM</span>
+        </div>
+    </div>
+
+    <main>
+        <form id="name-form" class="name-form" hidden>
+            <input type="text" placeholder="What is your name?">
+        </form>
+        
+        <div id="greeting" class="greeting" hidden>
+            <h1 id="title"></h1> 
+        </div>
+
+        <form id="setting-form" class="setting-form">
+                    
+            <div class="setting-times">
+                    
+                <div class="working">
+                    <label>Working Time : </label> 
+                    <div>
+                        <button>🔽</button>
+                        <input 
+                            required
+                            type="text" 
+                            id="working" 
+                            value="25"
+                        >
+                        <button>🔼</button>
+                        <span>Min</span>
+                    </div>
+                </div>
+                
+                <div class="resting">
+                    <label>Resting Time : </label>
+                    <div>
+                        <button>🔽</button>
+                        <input 
+                            required
+                            type="text" 
+                            id="resting" 
+                            value="5"
+                        >
+                        <button>🔼</button>
+                        <span>Min</span>
+                    </div>
+                </div>
+                
+                
+                <div class="goal">
+                    <label>Goal Count : </label>
+                    <div>
+                        <button>🔽</button>
+                        <input type="text" id="goal" value="1">
+                        <button>🔼</button>
+                        <span>Cnt</span>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <input type="submit" value="Start">
+        
+        </form>
+
+        <div id="time-result" class="time-results">
+            <div> 
+                <span>🕑</span> <span id="total-time"></span> 
+            </div>
+            <div> 
+                <span>🚩</span> <span id="end-time"></span>
+            </div>
+        </div>
+
+    </main>
+    
+    <script src="app.js" type="module"></script>
+</body>
+</html>
