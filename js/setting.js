@@ -9,6 +9,7 @@ const timeResult = document.querySelector('#time-result'),
 
 function renderEndTime(totalTime) {
     const endDate = new Date(Date.now()+(totalTime*60000));
+    const endDay = endDate.getDate();
     const endHours = endDate.getHours();
     const endMinutes = endDate.getMinutes();
 
@@ -45,6 +46,29 @@ function onSubmit(e) {
     e.preventDefault();
 }
 
+function onChangeInput(e) {
+    const value = Number(e.target.value);
+
+    if(!Number.isInteger(value)) {
+        e.target.value = 0;
+    }
+    else if (value >= 60) {
+        e.target.value = 59;
+    }
+
+    renderResult();
+}
+
+function onChangeGoal(e) {
+    const value = Number(e.target.value);
+
+    if(!Number.isInteger(value)) {
+        e.target.value = 0;
+    }
+
+    renderResult();
+}
+
 if (form) {
     form.addEventListener('click',onClickButton);
     form.addEventListener('submit',onSubmit);
@@ -55,13 +79,13 @@ if (timeResult) {
 }
 
 if (working) {
-    working.addEventListener('change',renderResult)
+    working.addEventListener('change',onChangeInput)
 }
 
 if (resting) {
-    resting.addEventListener('change',renderResult)
+    resting.addEventListener('change',onChangeInput)
 }
 
 if (goal) {
-    goal.addEventListener('change', renderResult)
+    goal.addEventListener('change', onChangeGoal)
 }
