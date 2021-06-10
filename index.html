@@ -25,58 +25,66 @@
             <h1 id="title"></h1> 
         </div>
 
-        <form id="setting-form" class="setting-form">
-                    
-            <div class="setting-times">
-                    
-                <div class="working">
-                    <label>Working Time : </label> 
-                    <div>
-                        <input 
-                            required
-                            type="text" 
-                            id="working" 
-                            value="25"
-                        >
-                        <span>Min</span>
-                    </div>
-                </div>
-                
-                <div class="resting">
-                    <label>Resting Time : </label>
-                    <div>
-                        <input 
-                            required
-                            type="text" 
-                            id="resting" 
-                            value="5"
-                        >
-                        <span>Min</span>
-                    </div>
-                </div>
-                
-                
-                <div class="goal">
-                    <label>Goal Count : </label>
-                    <div>
-                        <input type="text" id="goal" value="1">
-                        <span>Cnt</span>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <input type="submit" value="Start">
-        
-        </form>
+        <div id="setting" hidden>
 
-        <div id="time-result" class="time-results">
-            <div> 
-                <span>🕑</span> <span id="total-time"></span> 
+            <form id="setting-form" class="setting-form">
+                    
+                <div class="setting-times">
+                        
+                    <div class="working">
+                        <label>Working Time : </label> 
+                        <div>
+                            <input 
+                                required
+                                type="text" 
+                                id="working" 
+                                value="25"
+                            >
+                            <span>Min</span>
+                        </div>
+                    </div>
+                    
+                    <div class="resting">
+                        <label>Resting Time : </label>
+                        <div>
+                            <input 
+                                required
+                                type="text" 
+                                id="resting" 
+                                value="5"
+                            >
+                            <span>Min</span>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="goal">
+                        <label>Goal Count : </label>
+                        <div>
+                            <input type="text" id="goal" value="1">
+                            <span>Cnt</span>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <input type="submit" value="Start">
+            
+            </form>
+
+            <div id="time-result" class="time-results">
+                <div> 
+                    <span>🕑</span> <span id="total-time"></span> 
+                </div>
+                <div> 
+                    <span>🚩</span> <span id="end-time"></span>
+                </div>
             </div>
-            <div> 
-                <span>🚩</span> <span id="end-time"></span>
-            </div>
+
+        </div>
+
+        <div id="timer" hidden>
+            
         </div>
 
     </main>

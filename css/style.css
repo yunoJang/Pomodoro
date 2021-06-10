@@ -116,3 +116,19 @@ main {
     justify-content: space-between;
     margin-top: 30px;
 }
+
+@keyframes padeIn {
+    from { opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideUp {
+    from {transform: translateY(-20px);}
+    to {transform: translateY(0px);}
+}
+
+[hidden] { 
+    display: none;
+}
+
+
