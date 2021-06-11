@@ -131,4 +131,7 @@ main {
     display: none;
 }
 
+.timer-container {
+    margin-top: 60px;
+}
 
