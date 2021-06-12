@@ -1,0 +1,16 @@
+@import url(timer.css);
+
+.pomodoro {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    align-items: center;
+}
+
+.status {
+    font-size: 20px;
+    font-weight: 600;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+}
