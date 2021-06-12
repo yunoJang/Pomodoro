@@ -1,4 +1,5 @@
 @import url(reset.css);
+@import url(timer.css);
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
@@ -131,6 +132,6 @@ main {
     display: none;
 }
 
-.timer-container {
+.pomodoro {
     margin-top: 60px;
 }
