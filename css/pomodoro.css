@@ -7,9 +7,21 @@
 }
 
 .status {
-    font-size: 20px;
     font-weight: 600;
-    height: 50px;
+    font-size: 35px;
     width: 100%;
     text-align: center;
+    margin-bottom: 20px;
+}
+
+.time-container {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+.time-container .total-time {
+    font-size: 15px;
+    margin-top: 5px;
 }
