@@ -1,3 +1,6 @@
+import {hide as hideGreeting, init as initGreeting} from './greeting.js';
+import {show as showPomodoro} from './pomodoro.js';
+
 const setting = document.querySelector('#setting');
 const form = document.querySelector('#setting-form'),
     working = form.querySelector('#working'),
@@ -6,8 +9,6 @@ const form = document.querySelector('#setting-form'),
 const timeResult = document.querySelector('#time-result'),
     total = timeResult.querySelector('#total-time'),
     end = timeResult.querySelector('#end-time');
-
-const pomodoro = document.querySelector('#pomodoro');
 
 function renderEndTime(totalTime) {
     const endDate = new Date(Date.now()+(totalTime*60000));
@@ -77,13 +78,20 @@ function onSubmit(e) {
 
     saveTime();
 
-    setting.hidden = true;
-    pomodoro.hidden = false;
+    hide();
+    hideGreeting();
+    showPomodoro();
 }
 
 export function show() {
+    initGreeting();
+    
     setting.hidden = false;
-}   
+}
+
+export function hide() {
+    setting.hidden = true;
+}
 
 if (form) {
     form.addEventListener('submit',onSubmit);
