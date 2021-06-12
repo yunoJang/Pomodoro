@@ -1,13 +1,22 @@
-import {play, init as initTimer} from './timer.js';
+import {stop as stopTimer, init as initTimer} from './timer.js';
+import {show as showSetting} from './setting.js';
+
 
 const pomodoro = document.querySelector('#pomodoro');
+const stopButton = document.querySelector('.button-container #stop');
 
 let workingTime = 0;
 let restingTime = 0;
 let goalCount = 0;
 
-export function show() {
-    pomodoro.hidden = false;
+let progressTime = 0;
+
+function stop() {
+    progressTime = 0;
+    stopTimer();
+
+    pomodoro.hidden = true;
+    showSetting();
 }
 
 export function init() {
@@ -18,6 +27,11 @@ export function init() {
     restingTime = Number(settingTime.resting);
     goalCount = Number(settingTime.goal);
 
+    stopButton.addEventListener('click', stop);
+
     initTimer(workingTime);
-    play();
+}
+
+export function show() {
+    pomodoro.hidden = false;
 }

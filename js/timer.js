@@ -78,21 +78,21 @@ function tickSec() {
 
 export function play() {
     intervalID = setInterval(tickSec,1000)
+    isPlay = true;
+    control.innerHTML = `<i class="fas fa-pause"></i>`;
 }
 
 function pause() {
     clearInterval(intervalID);
+    isPlay = false;
+    control.innerHTML = `<i class="fas fa-play"></i>`;
 }
 
 function onClickControl() {
     if (isPlay) {
         pause();
-        control.innerHTML = `<i class="fas fa-play"></i>`;
-        isPlay = false;
     } else {
         play();
-        control.innerHTML = `<i class="fas fa-pause"></i>`;
-        isPlay = true;
     }
 }
 
@@ -117,6 +117,20 @@ function paintTime() {
     totalTimeDisplay.textContent = `( ${endTime} : 00 )`;
 }
 
+export function stop() {
+    pause();
+
+    while(fins.children.length) {
+        const child = fins.lastElementChild;
+        child.remove();
+    }
+
+    intervalID = null;
+    endTime = 0;
+    remainMin = 0;
+    remainSec = 0;
+}
+
 if (lines) {
     paintLines();
 }
@@ -132,6 +146,8 @@ if(control) {
 export function init(time) {
     endTime = time;
     remainMin = time;
+
     paintRemainTime();
     paintTime();
+    play();
 }

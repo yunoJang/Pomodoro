@@ -54,10 +54,13 @@ function onInput(e) {
 }
 
 function onInputGoal(e) {
-    const value = Number(e.target.value);
+    const value = Number(goal.value);
 
     if(!Number.isInteger(value)) {
-        e.target.value = 0;
+        goal.value = 0;
+    } 
+    else if(value >= 100) {
+        goal.value = 99;
     }
 
     renderResult();
