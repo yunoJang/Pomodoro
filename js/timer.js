@@ -81,11 +81,11 @@ function pause() {
 function onClickControl() {
     if (isPlay) {
         pause();
-        control.textContent = '▶';
+        control.innerHTML = `<i class="fas fa-play"></i>`;
         isPlay = false;
     } else {
         play();
-        control.textContent = '⏸';
+        control.innerHTML = `<i class="fas fa-pause"></i>`;
         isPlay = true;
     }
 }
