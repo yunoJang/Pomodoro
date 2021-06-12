@@ -6,9 +6,8 @@ const form = document.querySelector('#setting-form'),
 const timeResult = document.querySelector('#time-result'),
     total = timeResult.querySelector('#total-time'),
     end = timeResult.querySelector('#end-time');
-const timer = document.querySelector('#timer');
 
-const SHOW_CLASSNAME = 'show';
+const pomodoro = document.querySelector('#pomodoro');
 
 function renderEndTime(totalTime) {
     const endDate = new Date(Date.now()+(totalTime*60000));
@@ -40,7 +39,7 @@ function renderResult() {
     renderEndTime(totalTime);
 }
 
-function onChangeInput(e) {
+function onInput(e) {
     const value = Number(e.target.value);
 
     if(!Number.isInteger(value)) {
@@ -53,7 +52,7 @@ function onChangeInput(e) {
     renderResult();
 }
 
-function onChangeGoal(e) {
+function onInputGoal(e) {
     const value = Number(e.target.value);
 
     if(!Number.isInteger(value)) {
@@ -65,7 +64,6 @@ function onChangeGoal(e) {
 
 function saveTime() {
     const time = {
-        start : Date.now(),
         working : working.value,
         resting : resting.value,
         goalCount : goal.value,
@@ -80,8 +78,12 @@ function onSubmit(e) {
     saveTime();
 
     setting.hidden = true;
-    timer.classList.add(SHOW_CLASSNAME);
+    pomodoro.hidden = false;
 }
+
+export function show() {
+    setting.hidden = false;
+}   
 
 if (form) {
     form.addEventListener('submit',onSubmit);
@@ -92,17 +94,13 @@ if (timeResult) {
 }
 
 if (working) {
-    working.addEventListener('change',onChangeInput)
+    working.addEventListener('input',onInput)
 }
 
 if (resting) {
-    resting.addEventListener('change',onChangeInput)
+    resting.addEventListener('input',onInput)
 }
 
 if (goal) {
-    goal.addEventListener('change', onChangeGoal)
+    goal.addEventListener('input', onInputGoal)
 }
-
-export function show() {
-    setting.hidden = false;
-}   
