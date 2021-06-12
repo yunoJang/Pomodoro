@@ -1,4 +1,4 @@
-import {play, paintRemainTime} from './timer.js';
+import {play, init as initTimer} from './timer.js';
 
 const pomodoro = document.querySelector('#pomodoro');
 
@@ -18,6 +18,6 @@ export function init() {
     restingTime = Number(settingTime.resting);
     goalCount = Number(settingTime.goal);
 
-    paintRemainTime(workingTime);
+    initTimer(workingTime);
     play();
 }
