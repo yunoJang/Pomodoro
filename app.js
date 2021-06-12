@@ -8,11 +8,11 @@ import './js/timer.js';
 function init() {
     const time = localStorage.getItem('time');
     
-    if(time === null) {
+    //if(time === null) {
         showSetting();
-    } else {
-        showPomodoro();
-    }
+    //} else {
+    //    showPomodoro();
+    //}
 }
 
 init();

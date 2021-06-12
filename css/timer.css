@@ -118,3 +118,15 @@ body {
     transform: scale(.97);
     background: rgb(248, 248, 248);
 }
+
+.time-container {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+.time-container .total-time {
+    font-size: 15px;
+    margin-top: 5px;
+}

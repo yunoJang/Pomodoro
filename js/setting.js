@@ -1,5 +1,5 @@
 import {hide as hideGreeting, init as initGreeting} from './greeting.js';
-import {show as showPomodoro} from './pomodoro.js';
+import {show as showPomodoro, init as initPomodoro} from './pomodoro.js';
 
 const setting = document.querySelector('#setting');
 const form = document.querySelector('#setting-form'),
@@ -80,6 +80,8 @@ function onSubmit(e) {
 
     hide();
     hideGreeting();
+
+    initPomodoro();
     showPomodoro();
 }
 

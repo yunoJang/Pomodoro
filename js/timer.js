@@ -5,10 +5,7 @@ const nums = timer.querySelector('#num-container');
 
 const control = document.querySelector('.button-container #control');
 
-const endTime = 40;
-
 let intervalID = null;
-
 let isPlay = true;
 
 function paintLines() {
@@ -49,8 +46,8 @@ function paintNumber() {
     }
 }
 
-function paintRemainTime() {
-    for (let min=0; min<endTime; min++) {
+export function paintRemainTime(remainMinutes) {
+    for (let min=0; min<remainMinutes; min++) {
         for (let sec=0; sec<60; sec++) {
             const remainFin = document.createElement('div');
             remainFin.classList.add('fin');
@@ -70,7 +67,7 @@ function tickSec() {
     }
 }
 
-function play() {
+export function play() {
     intervalID = setInterval(tickSec,1000)
 }
 
@@ -96,11 +93,6 @@ if (lines) {
 
 if (nums) {
     paintNumber();
-}
-
-if (fins) {
-    paintRemainTime();
-    play();
 }
 
 if(control) {
