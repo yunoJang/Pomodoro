@@ -49,7 +49,7 @@ function paintNumber() {
     }
 }
 
-function paintRemainTime(isWorking) {
+function paintRemainFins(isWorking) {
     for (let min=0; min<totalTime; min++) {
         for (let sec=0; sec<60; sec++) {
             const fin = document.createElement('div');
@@ -129,6 +129,6 @@ export function init(time, isWorking) {
     remainSec = 0;
     intervalID = null;
     
-    paintRemainTime(isWorking);
+    paintRemainFins(isWorking);
     paintTime();
 }
