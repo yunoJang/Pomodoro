@@ -49,16 +49,20 @@ function paintNumber() {
     }
 }
 
-function paintRemainTime() {
+function paintRemainTime(isWorking) {
     for (let min=0; min<totalTime; min++) {
         for (let sec=0; sec<60; sec++) {
-            const remainFin = document.createElement('div');
-            remainFin.classList.add('fin');
+            const fin = document.createElement('div');
+            fin.classList.add('fin');
+
+            if(!isWorking) {
+                fin.classList.add('resting');
+            }
 
             const deg = min*6+sec*0.1;
-            remainFin.style.transform = `rotate(${-deg}deg)`
+            fin.style.transform = `rotate(${-deg}deg)`
             
-            fins.append(remainFin);
+            fins.append(fin);
         }
     }
 }
@@ -119,12 +123,12 @@ if (nums) {
     paintNumber();
 }
 
-export function init(time) {
+export function init(time, isWorking) {
     totalTime = time;
     remainMin = time;
     remainSec = 0;
     intervalID = null;
     
-    paintRemainTime();
+    paintRemainTime(isWorking);
     paintTime();
 }

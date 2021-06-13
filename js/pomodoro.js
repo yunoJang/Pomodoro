@@ -30,10 +30,10 @@ function restartTimer() {
     stopTimer();
 
     if(isWorking) {
-        initTimer(workingTime);
+        initTimer(workingTime,isWorking);
     } 
     else {
-        initTimer(restingTime);
+        initTimer(restingTime,isWorking);
     }
 
     playTimer();
@@ -89,7 +89,7 @@ export function init() {
     stopButton.addEventListener('click', stop);
     controlButton.addEventListener('click', onClickControl);
 
-    initTimer(workingTime);
+    initTimer(workingTime,isWorking);
     play();
 }
 
