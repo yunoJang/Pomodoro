@@ -39,4 +39,4 @@ function renderDate(){
 }
 
 renderDate();
-setInterval(renderDate, 1000);
+setInterval(renderDate, 100);
