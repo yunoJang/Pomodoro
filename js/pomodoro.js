@@ -2,8 +2,9 @@ import {stop as stopTimer, init as initTimer, play as playTimer, pause as pauseT
 import {show as showSetting} from './setting.js';
 
 const pomodoro = document.querySelector('#pomodoro');
-const stopButton = document.querySelector('.button-container #stop');
-const controlButton = document.querySelector('.button-container #control');
+const stopButton = pomodoro.querySelector('.button-container #stop');
+const controlButton = pomodoro.querySelector('.button-container #control');
+const status = pomodoro.querySelector('#status')
 
 let workingTime = 0;
 let restingTime = 0;
@@ -42,7 +43,13 @@ function restartTimer() {
 function changeStatus() {
     isWorking = !isWorking;
 
-    
+    if (isWorking) {
+        status.textContent = 'WORKING';
+    }
+    else {
+        status.textContent = 'RESTING';
+    }
+
     restartTimer();
 }
 
@@ -81,6 +88,7 @@ function onClickControl() {
 
 export function init() {
     isWorking = true;
+    status.textContent = 'WORKING';
     
     const json = localStorage.getItem('time');
     const settingTime = JSON.parse(json);

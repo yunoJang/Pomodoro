@@ -90,6 +90,7 @@ function onSubmit(e) {
 
 export function show() {
     initGreeting();
+    renderResult();
     
     setting.hidden = false;
 }
