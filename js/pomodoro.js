@@ -10,8 +10,8 @@ let restingTime = 0;
 let goalCount = 0;
 
 let timerProgress = 0;
-let isWorking = true;
 let isPlay = true;
+let isWorking = true;
 
 let intervalId = null;
 
@@ -42,6 +42,7 @@ function restartTimer() {
 function changeStatus() {
     isWorking = !isWorking;
 
+    
     restartTimer();
 }
 
@@ -79,6 +80,8 @@ function onClickControl() {
 }
 
 export function init() {
+    isWorking = true;
+    
     const json = localStorage.getItem('time');
     const settingTime = JSON.parse(json);
 
