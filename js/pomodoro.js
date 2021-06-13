@@ -13,6 +13,7 @@ let goalCount = 0;
 let timerProgress = 0;
 let isPlay = true;
 let isWorking = true;
+let currentCount = 0;
 
 let intervalId = null;
 
@@ -45,6 +46,11 @@ function changeStatus() {
 
     if (isWorking) {
         status.textContent = 'WORKING';
+
+        currentCount++;
+        if ( currentCount === goalCount ) {
+            stop();
+        }
     }
     else {
         status.textContent = 'RESTING';
@@ -65,7 +71,7 @@ function tickSecond() {
 }
 
 function play() {
-    intervalId = setInterval(tickSecond,10);
+    intervalId = setInterval(tickSecond,1000);
     isPlay = true;
 
     playTimer();
@@ -95,7 +101,7 @@ export function init() {
 
     workingTime = Number(settingTime.working);
     restingTime = Number(settingTime.resting);
-    goalCount = Number(settingTime.goal);
+    goalCount = Number(settingTime.goalCount);
 
     stopButton.addEventListener('click', stop);
     controlButton.addEventListener('click', onClickControl);

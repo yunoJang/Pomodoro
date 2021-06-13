@@ -77,7 +77,7 @@ function tickSecond() {
 }
 
 export function play() {
-    intervalID = setInterval(tickSecond,10)
+    intervalID = setInterval(tickSecond,1000)
     control.innerHTML = `<i class="fas fa-pause"></i>`;
 }
 
