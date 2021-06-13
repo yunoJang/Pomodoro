@@ -2,17 +2,12 @@ const timer = document.getElementById('timer');
 const lines = timer.querySelector('#lines');
 const fins = timer.querySelector('#fins');
 const nums = timer.querySelector('#num-container');
-
-const control = document.querySelector('.button-container #control');
-
 const remainTimeDisplay = document.querySelector('.time-container #remain-time');
 const totalTimeDisplay = document.querySelector('.time-container #total-time');
 
 let intervalID = null;
-let isPlay = true;
 
-let endTime = 0;
-
+let totalTime = 0;
 let remainMin = 0;
 let remainSec = 0;
 
@@ -55,7 +50,7 @@ function paintNumber() {
 }
 
 function paintRemainTime() {
-    for (let min=0; min<endTime; min++) {
+    for (let min=0; min<totalTime; min++) {
         for (let sec=0; sec<60; sec++) {
             const remainFin = document.createElement('div');
             remainFin.classList.add('fin');
@@ -68,32 +63,23 @@ function paintRemainTime() {
     }
 }
 
-function tickSec() {
+function tickSecond() {
     const lastFin = fins.lastChild;
     if (lastFin) {
         lastFin.remove();
-        renderRemainTime();
     }
+
+    renderRemainTime();
 }
 
 export function play() {
-    intervalID = setInterval(tickSec,1000)
-    isPlay = true;
+    intervalID = setInterval(tickSecond,10)
     control.innerHTML = `<i class="fas fa-pause"></i>`;
 }
 
-function pause() {
+export function pause() {
     clearInterval(intervalID);
-    isPlay = false;
     control.innerHTML = `<i class="fas fa-play"></i>`;
-}
-
-function onClickControl() {
-    if (isPlay) {
-        pause();
-    } else {
-        play();
-    }
 }
 
 function renderRemainTime() {
@@ -105,7 +91,6 @@ function renderRemainTime() {
     `;
 
     remainSec--;
-
     if (remainSec < 0) {
         remainSec = 59;
         remainMin--;
@@ -114,7 +99,7 @@ function renderRemainTime() {
 
 function paintTime() {
     renderRemainTime();
-    totalTimeDisplay.textContent = `( ${endTime} : 00 )`;
+    totalTimeDisplay.textContent = `( ${totalTime} : 00 )`;
 }
 
 export function stop() {
@@ -124,11 +109,6 @@ export function stop() {
         const child = fins.lastElementChild;
         child.remove();
     }
-
-    intervalID = null;
-    endTime = 0;
-    remainMin = 0;
-    remainSec = 0;
 }
 
 if (lines) {
@@ -139,15 +119,12 @@ if (nums) {
     paintNumber();
 }
 
-if(control) {
-    control.addEventListener('click', onClickControl);
-}
-
 export function init(time) {
-    endTime = time;
+    totalTime = time;
     remainMin = time;
-
+    remainSec = 0;
+    intervalID = null;
+    
     paintRemainTime();
     paintTime();
-    play();
 }

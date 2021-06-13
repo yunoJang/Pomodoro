@@ -73,6 +73,10 @@ body {
     transform-origin: bottom;
 }
 
+.fin.resting {
+    background: rgb(58, 225, 58);
+}
+
 .timer .cover2 {
     position: absolute;
     width: 20%;
