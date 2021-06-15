@@ -12,14 +12,41 @@ export default class Timer {
         this.isWorking = isWorking;
 
         this.intervalId = null;
-        
-        paintLines();
-        paintNumber();
 
         this.paintRemainFins();
         if(totalTimeDisplay && remainTimeDisplay) this.paintTime();
+    }
 
-        this.play();
+    stop() {
+        this.pause();
+    
+        while(fins.children.length) {
+            const child = fins.lastElementChild;
+            child.remove();
+        }
+    }
+
+    tickSecond() {
+        this.progressTimeSec++;
+        if(this.progressTimeSec >= this.totalTime * 60) this.pause();
+
+        const lastFin = fins.lastChild;
+
+        if (lastFin) {
+            lastFin.remove();
+        }
+
+        this.renderRemainTime();
+    }
+
+    play() {
+        this.intervalID = setInterval(this.tickSecond.bind(this),1000)
+        control.innerHTML = `<i class="fas fa-pause"></i>`;
+    }
+    
+    pause() {
+        clearInterval(this.intervalID);
+        control.innerHTML = `<i class="fas fa-play"></i>`;
     }
 
     renderRemainTime() {
@@ -53,39 +80,6 @@ export default class Timer {
                 
                 fins.append(fin);
             }
-        }
-    }
-
-    tickSecond() {
-        this.progressTimeSec++;
-
-        if(this.progressTimeSec >= this.totalTime * 60) this.pause();
-
-        const lastFin = fins.lastChild;
-
-        if (lastFin) {
-            lastFin.remove();
-        }
-
-        this.renderRemainTime();
-    }
-
-    play() {
-        this.intervalID = setInterval(this.tickSecond.bind(this),1000)
-        control.innerHTML = `<i class="fas fa-pause"></i>`;
-    }
-    
-    pause() {
-        clearInterval(this.intervalID);
-        control.innerHTML = `<i class="fas fa-play"></i>`;
-    }
-
-    stop() {
-        this.pause();
-    
-        while(fins.children.length) {
-            const child = fins.lastElementChild;
-            child.remove();
         }
     }
 
@@ -128,3 +122,6 @@ function paintNumber() {
         nums.append(numBox);
     }
 }
+
+paintLines();
+paintNumber();

@@ -2,27 +2,24 @@ import Timer from './timer.js';
 import {show as showSetting} from './setting.js';
 
 const pomodoro = document.querySelector('#pomodoro');
+const status = pomodoro.querySelector('#status')
 const stopButton = pomodoro.querySelector('.button-container #stop');
 const controlButton = pomodoro.querySelector('.button-container #control');
-const status = pomodoro.querySelector('#status')
 
 let workingTime = 0;
 let restingTime = 0;
-let goalCount = 0;
 
-let timerProgress = 0;
-let isPlay = true;
-let isWorking = true;
+let goalCount = 0;
 let currentCount = 0;
 
 let intervalId = null;
 
+let isWorking = true;
+let isPlay = true;
+
 let timer = null;
 
 function stop() {
-    timerProgress = 0;
-    clearInterval(intervalId);
-    
     timer.stop();
 
     pomodoro.hidden = true;
@@ -30,40 +27,42 @@ function stop() {
 }
 
 function restartTimer() {
-    timerProgress = 0;
     timer.stop();
 
     if(isWorking) {
-        timer = new Timer(workingTime, isWorking);
+        timer = new Timer(workingTime,isWorking);
     } 
     else {
-        timer = new Timer(restingTime, isWorking);
+        timer = new Timer(restingTime,isWorking);
+    }
+
+    timer.play();
+}
+
+function paintStatus() {
+    if (isWorking) {
+        status.textContent = 'WORKING';
+    }
+    else {
+        status.textContent = 'RESTING';
     }
 }
 
 function changeStatus() {
     isWorking = !isWorking;
 
-    if (isWorking) {
-        status.textContent = 'WORKING';
+    if(isWorking) currentCount++;
+    
+    if(currentCount === goalCount) stop();
 
-        currentCount++;
-        if ( currentCount === goalCount ) {
-            stop();
-        }
-    }
-    else {
-        status.textContent = 'RESTING';
-    }
+    paintStatus();
 
     restartTimer();
 }
 
 function tickSecond() {
-    timerProgress++;
-
-    const isWorkingEnd = isWorking && timerProgress === workingTime*60;
-    const isRestingEnd = !isWorking && timerProgress === restingTime*60;
+    const isWorkingEnd = isWorking && timer.progressTimeSec === workingTime*60;
+    const isRestingEnd = !isWorking && timer.progressTimeSec === restingTime*60;
 
     if ( isWorkingEnd || isRestingEnd ) {
         changeStatus();
@@ -92,21 +91,22 @@ function onClickControl() {
     }
 }
 
-export function init() {
-    isWorking = true;
-    status.textContent = 'WORKING';
-    
-    const json = localStorage.getItem('time');
-    const settingTime = JSON.parse(json);
 
+export function init() {
+    const localStorageData = localStorage.getItem('time');
+    const settingTime = JSON.parse(localStorageData);
     workingTime = Number(settingTime.working);
     restingTime = Number(settingTime.resting);
     goalCount = Number(settingTime.goalCount);
+
+    isWorking = true;
+    paintStatus();
 
     stopButton.addEventListener('click', stop);
     controlButton.addEventListener('click', onClickControl);
 
     timer = new Timer(workingTime, isWorking);
+    play();
 }
 
 export function show() {
