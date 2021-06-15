@@ -15,15 +15,26 @@ export default class Timer {
         
         paintLines();
         paintNumber();
-        
+
         this.paintRemainFins();
         if(totalTimeDisplay && remainTimeDisplay) this.paintTime();
 
         this.play();
     }
 
+    renderRemainTime() {
+        const totalSec = this.totalTime * 60 - this.progressTimeSec;
+        const min = Math.floor(totalSec/60);
+        const sec = totalSec % 60;
+
+        remainTimeDisplay.textContent = `
+            ${min<10? `0${min}`: min} : 
+            ${sec<10? `0${sec}`: sec}
+        `;
+    }
+
     paintTime() {
-        renderRemainTime();
+        this.renderRemainTime();
         totalTimeDisplay.textContent = `( ${this.totalTime} : 00 )`;
     }
 
@@ -46,14 +57,17 @@ export default class Timer {
     }
 
     tickSecond() {
+        this.progressTimeSec++;
+
+        if(this.progressTimeSec >= this.totalTime * 60) this.pause();
+
         const lastFin = fins.lastChild;
+
         if (lastFin) {
             lastFin.remove();
         }
 
-        this.progressTimeSec++;
-
-        renderRemainTime();
+        this.renderRemainTime();
     }
 
     play() {
@@ -76,9 +90,6 @@ export default class Timer {
     }
 
 }
-
-let remainMin = 0;
-let remainSec = 0;
 
 function paintLines() {
     for(let i=0; i<30; i++) {
@@ -117,19 +128,3 @@ function paintNumber() {
         nums.append(numBox);
     }
 }
-
-function renderRemainTime() {
-    if(remainMin < 0) return;
-
-    remainTimeDisplay.textContent = `
-        ${remainMin < 10 ? `0${remainMin}`: remainMin}:
-        ${remainSec < 10 ? `0${remainSec}`: remainSec}
-    `;
-
-    remainSec--;
-    if (remainSec < 0) {
-        remainSec = 59;
-        remainMin--;
-    }
-}
-
