@@ -1,4 +1,4 @@
-import {stop as stopTimer, init as initTimer, play as playTimer, pause as pauseTimer} from './timer.js';
+import Timer from './timer.js';
 import {show as showSetting} from './setting.js';
 
 const pomodoro = document.querySelector('#pomodoro');
@@ -17,11 +17,13 @@ let currentCount = 0;
 
 let intervalId = null;
 
+let timer = null;
+
 function stop() {
     timerProgress = 0;
     clearInterval(intervalId);
     
-    stopTimer();
+    timer.stop();
 
     pomodoro.hidden = true;
     showSetting();
@@ -29,16 +31,14 @@ function stop() {
 
 function restartTimer() {
     timerProgress = 0;
-    stopTimer();
+    timer.stop();
 
     if(isWorking) {
-        initTimer(workingTime,isWorking);
+        timer = new Timer(workingTime, isWorking);
     } 
     else {
-        initTimer(restingTime,isWorking);
+        timer = new Timer(restingTime, isWorking);
     }
-
-    playTimer();
 }
 
 function changeStatus() {
@@ -74,14 +74,14 @@ function play() {
     intervalId = setInterval(tickSecond,1000);
     isPlay = true;
 
-    playTimer();
+    timer.play();
 }
 
 function pause() {
     clearInterval(intervalId);
     isPlay = false;
 
-    pauseTimer();
+    timer.pause();
 }
 
 function onClickControl() {
@@ -106,8 +106,7 @@ export function init() {
     stopButton.addEventListener('click', stop);
     controlButton.addEventListener('click', onClickControl);
 
-    initTimer(workingTime,isWorking);
-    play();
+    timer = new Timer(workingTime, isWorking);
 }
 
 export function show() {

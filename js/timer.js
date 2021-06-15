@@ -5,9 +5,78 @@ const nums = timer.querySelector('#num-container');
 const remainTimeDisplay = document.querySelector('.time-container #remain-time');
 const totalTimeDisplay = document.querySelector('.time-container #total-time');
 
-let intervalID = null;
+export default class Timer {
+    constructor(time, isWorking) {
+        this.totalTime = time;
+        this.progressTimeSec = 0;
+        this.isWorking = isWorking;
 
-let totalTime = 0;
+        this.intervalId = null;
+        
+        paintLines();
+        paintNumber();
+        
+        this.paintRemainFins();
+        if(totalTimeDisplay && remainTimeDisplay) this.paintTime();
+
+        this.play();
+    }
+
+    paintTime() {
+        renderRemainTime();
+        totalTimeDisplay.textContent = `( ${this.totalTime} : 00 )`;
+    }
+
+    paintRemainFins() {
+        for (let min=0; min<this.totalTime; min++) {
+            for (let sec=0; sec<60; sec++) {
+                const fin = document.createElement('div');
+                fin.classList.add('fin');
+    
+                if(!this.isWorking) {
+                    fin.classList.add('resting');
+                }
+    
+                const deg = min*6+sec*0.1;
+                fin.style.transform = `rotate(${-deg}deg)`
+                
+                fins.append(fin);
+            }
+        }
+    }
+
+    tickSecond() {
+        const lastFin = fins.lastChild;
+        if (lastFin) {
+            lastFin.remove();
+        }
+
+        this.progressTimeSec++;
+
+        renderRemainTime();
+    }
+
+    play() {
+        this.intervalID = setInterval(this.tickSecond.bind(this),1000)
+        control.innerHTML = `<i class="fas fa-pause"></i>`;
+    }
+    
+    pause() {
+        clearInterval(this.intervalID);
+        control.innerHTML = `<i class="fas fa-play"></i>`;
+    }
+
+    stop() {
+        this.pause();
+    
+        while(fins.children.length) {
+            const child = fins.lastElementChild;
+            child.remove();
+        }
+    }
+
+}
+
 let remainMin = 0;
 let remainSec = 0;
 
@@ -49,43 +118,6 @@ function paintNumber() {
     }
 }
 
-function paintRemainFins(isWorking) {
-    for (let min=0; min<totalTime; min++) {
-        for (let sec=0; sec<60; sec++) {
-            const fin = document.createElement('div');
-            fin.classList.add('fin');
-
-            if(!isWorking) {
-                fin.classList.add('resting');
-            }
-
-            const deg = min*6+sec*0.1;
-            fin.style.transform = `rotate(${-deg}deg)`
-            
-            fins.append(fin);
-        }
-    }
-}
-
-function tickSecond() {
-    const lastFin = fins.lastChild;
-    if (lastFin) {
-        lastFin.remove();
-    }
-
-    renderRemainTime();
-}
-
-export function play() {
-    intervalID = setInterval(tickSecond,1000)
-    control.innerHTML = `<i class="fas fa-pause"></i>`;
-}
-
-export function pause() {
-    clearInterval(intervalID);
-    control.innerHTML = `<i class="fas fa-play"></i>`;
-}
-
 function renderRemainTime() {
     if(remainMin < 0) return;
 
@@ -101,34 +133,3 @@ function renderRemainTime() {
     }
 }
 
-function paintTime() {
-    renderRemainTime();
-    totalTimeDisplay.textContent = `( ${totalTime} : 00 )`;
-}
-
-export function stop() {
-    pause();
-
-    while(fins.children.length) {
-        const child = fins.lastElementChild;
-        child.remove();
-    }
-}
-
-if (lines) {
-    paintLines();
-}
-
-if (nums) {
-    paintNumber();
-}
-
-export function init(time, isWorking) {
-    totalTime = time;
-    remainMin = time;
-    remainSec = 0;
-    intervalID = null;
-    
-    paintRemainFins(isWorking);
-    paintTime();
-}
