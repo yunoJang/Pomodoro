@@ -49,6 +49,9 @@ function onInput(e) {
     else if (value >= 60) {
         e.target.value = 59;
     }
+    else {
+        e.target.value = value;
+    }
 
     renderResult();
 }
