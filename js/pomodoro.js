@@ -4,109 +4,86 @@ import {show as showSetting} from './setting.js';
 const pomodoro = document.querySelector('#pomodoro');
 const status = pomodoro.querySelector('#status')
 const stopButton = pomodoro.querySelector('.button-container #stop');
-const controlButton = pomodoro.querySelector('.button-container #control');
 
 let workingTime = 0;
 let restingTime = 0;
-
 let goalCount = 0;
 let currentCount = 0;
 
-let intervalId = null;
-
 let isWorking = true;
-let isPlay = true;
 
-let timer = null;
-
-function stop() {
-    timer.stop();
-
-    pomodoro.hidden = true;
-    showSetting();
-}
+let timer = new Timer();
 
 function restartTimer() {
     timer.stop();
 
     if(isWorking) {
-        timer = new Timer(workingTime,isWorking);
+        timer.set(workingTime,isWorking);
     } 
     else {
-        timer = new Timer(restingTime,isWorking);
+        timer.set(restingTime,isWorking);
     }
 
     timer.play();
 }
 
-function paintStatus() {
-    if (isWorking) {
-        status.textContent = 'WORKING';
-    }
-    else {
-        status.textContent = 'RESTING';
-    }
+function paintStatus(text) {
+    status.textContent = `${text}`;
 }
 
-function changeStatus() {
-    isWorking = !isWorking;
-
-    if(isWorking) currentCount++;
-    
-    if(currentCount === goalCount) stop();
-
-    paintStatus();
-
+function resting() {
+    isWorking = false;
+    paintStatus('Resting');
     restartTimer();
 }
 
-function tickSecond() {
-    const isWorkingEnd = isWorking && timer.progressTimeSec === workingTime*60;
-    const isRestingEnd = !isWorking && timer.progressTimeSec === restingTime*60;
-
-    if ( isWorkingEnd || isRestingEnd ) {
-        changeStatus();
-    } 
-}
-
-function play() {
-    intervalId = setInterval(tickSecond,1000);
-    isPlay = true;
-
-    timer.play();
-}
-
-function pause() {
-    clearInterval(intervalId);
-    isPlay = false;
-
-    timer.pause();
-}
-
-function onClickControl() {
-    if (isPlay) {
-        pause();
-    } else {
-        play();
+function working() {
+    currentCount++;
+    if(currentCount == goalCount) {
+        stop();
+    }else {
+        isWorking = true;
+        paintStatus('Working');
+        restartTimer();
     }
 }
 
+function checkTimerEnd() {
+    const isWorkingEnd = isWorking && timer.progressTimeSec == workingTime*60;
+    const isRestingEnd = !isWorking && timer.progressTimeSec == restingTime*60;
+
+    if (isWorkingEnd) {
+        resting();
+    } 
+    else if(isRestingEnd) {
+        working()
+    }
+}
+
+function stop() {
+    timer.stop();
+    currentCount = 0;
+
+    pomodoro.hidden = true;
+    showSetting();
+}
 
 export function init() {
     const localStorageData = localStorage.getItem('time');
     const settingTime = JSON.parse(localStorageData);
+
     workingTime = Number(settingTime.working);
     restingTime = Number(settingTime.resting);
     goalCount = Number(settingTime.goalCount);
 
     isWorking = true;
-    paintStatus();
+    paintStatus('Working');
 
+    setInterval(checkTimerEnd,100)
     stopButton.addEventListener('click', stop);
-    controlButton.addEventListener('click', onClickControl);
 
-    timer = new Timer(workingTime, isWorking);
-    play();
+    timer.set(workingTime,isWorking);
+    timer.play();
 }
 
 export function show() {

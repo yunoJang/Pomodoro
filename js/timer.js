@@ -2,19 +2,28 @@ const timer = document.getElementById('timer');
 const lines = timer.querySelector('#lines');
 const fins = timer.querySelector('#fins');
 const nums = timer.querySelector('#num-container');
+const controlButton = pomodoro.querySelector('.button-container #control');
 const remainTimeDisplay = document.querySelector('.time-container #remain-time');
 const totalTimeDisplay = document.querySelector('.time-container #total-time');
 
 export default class Timer {
-    constructor(time, isWorking) {
-        this.totalTime = time;
+    constructor() {
         this.progressTimeSec = 0;
-        this.isWorking = isWorking;
-
         this.intervalId = null;
 
-        this.paintRemainFins();
-        if(totalTimeDisplay && remainTimeDisplay) this.paintTime();
+        controlButton.addEventListener('click', this.clickControl.bind(this));
+    }
+
+    set(time,isWorking) {
+        this.totalTime = time;
+        this.progressTimeSec = 0;
+        this.paintRemainFins(isWorking);
+        this.paintTime();
+    }
+
+    clickControl() {
+        if(this.isPlay) this.pause();
+        else this.play();
     }
 
     stop() {
@@ -27,24 +36,23 @@ export default class Timer {
     }
 
     tickSecond() {
+        console.log("t")
         this.progressTimeSec++;
-        if(this.progressTimeSec >= this.totalTime * 60) this.pause();
 
         const lastFin = fins.lastChild;
-
-        if (lastFin) {
-            lastFin.remove();
-        }
+        if (lastFin) lastFin.remove();
 
         this.renderRemainTime();
     }
 
     play() {
-        this.intervalID = setInterval(this.tickSecond.bind(this),1000)
+        this.isPlay = true;
+        this.intervalID = setInterval(this.tickSecond.bind(this),100)
         control.innerHTML = `<i class="fas fa-pause"></i>`;
     }
     
     pause() {
+        this.isPlay = false;
         clearInterval(this.intervalID);
         control.innerHTML = `<i class="fas fa-play"></i>`;
     }
@@ -65,13 +73,13 @@ export default class Timer {
         totalTimeDisplay.textContent = `( ${this.totalTime} : 00 )`;
     }
 
-    paintRemainFins() {
+    paintRemainFins(isWorking) {
         for (let min=0; min<this.totalTime; min++) {
             for (let sec=0; sec<60; sec++) {
                 const fin = document.createElement('div');
                 fin.classList.add('fin');
     
-                if(!this.isWorking) {
+                if(!isWorking) {
                     fin.classList.add('resting');
                 }
     
