@@ -11,8 +11,12 @@ let goalCount = 0;
 let currentCount = 0;
 
 let isWorking = true;
+let intervalId = null;
 
-let timer = new Timer();
+const timer = new Timer();
+
+const beep = new Audio('../audio/beep.mp3');
+const endSound = new Audio('../audio/end.wav');
 
 function restartTimer() {
     timer.stop();
@@ -31,39 +35,39 @@ function paintStatus(text) {
     status.textContent = `${text}`;
 }
 
-function resting() {
-    isWorking = false;
-    paintStatus('Resting');
-    restartTimer();
+function end() {
+    endSound.play();
+    stop();
 }
 
-function working() {
-    currentCount++;
-    if(currentCount == goalCount) {
-        stop();
-    }else {
-        isWorking = true;
-        paintStatus('Working');
-        restartTimer();
+function changeStatus() {
+    isWorking = !isWorking;
+
+    if(isWorking && ++currentCount == goalCount) {
+        end();
+        return;
     }
+
+    beep.currentTime = 2;
+    beep.play();
+    paintStatus(isWorking?'Working':'Resting');
+    restartTimer();
 }
 
 function checkTimerEnd() {
     const isWorkingEnd = isWorking && timer.progressTimeSec == workingTime*60;
     const isRestingEnd = !isWorking && timer.progressTimeSec == restingTime*60;
 
-    if (isWorkingEnd) {
-        resting();
+    if (isWorkingEnd || isRestingEnd) {
+        changeStatus();
     } 
-    else if(isRestingEnd) {
-        working()
-    }
 }
 
 function stop() {
     timer.stop();
-    currentCount = 0;
 
+    currentCount = 0;
+    clearInterval(intervalId);
     pomodoro.hidden = true;
     showSetting();
 }
@@ -79,7 +83,7 @@ export function init() {
     isWorking = true;
     paintStatus('Working');
 
-    setInterval(checkTimerEnd,100)
+    intervalId = setInterval(checkTimerEnd,100)
     stopButton.addEventListener('click', stop);
 
     timer.set(workingTime,isWorking);

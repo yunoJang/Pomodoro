@@ -36,7 +36,6 @@ export default class Timer {
     }
 
     tickSecond() {
-        console.log("t")
         this.progressTimeSec++;
 
         const lastFin = fins.lastChild;
