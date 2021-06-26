@@ -15,8 +15,8 @@ let intervalId = null;
 
 const timer = new Timer();
 
-const beep = new Audio('../audio/beep.mp3');
-const endSound = new Audio('../audio/end.wav');
+const beep = new Audio('/audio/beep.mp3');
+const endSound = new Audio('/audio/end.wav');
 
 function restartTimer() {
     timer.stop();
