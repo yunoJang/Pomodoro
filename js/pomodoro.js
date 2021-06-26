@@ -55,8 +55,8 @@ function changeStatus() {
 }
 
 function checkTimerEnd() {
-    const isWorkingEnd = isWorking && timer.progressTimeSec == workingTime*60;
-    const isRestingEnd = !isWorking && timer.progressTimeSec == restingTime*60;
+    const isWorkingEnd = isWorking && timer.progressTimeSec+1 == workingTime*60;
+    const isRestingEnd = !isWorking && timer.progressTimeSec+1 == restingTime*60;
 
     if (isWorkingEnd || isRestingEnd) {
         changeStatus();
