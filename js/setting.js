@@ -46,8 +46,8 @@ function onInput(e) {
     if(!Number.isInteger(value)) {
         e.target.value = 0;
     }
-    else if (value >= 60) {
-        e.target.value = 59;
+    else if (value > 60) {
+        e.target.value = 60;
     }
     else {
         e.target.value = value;
