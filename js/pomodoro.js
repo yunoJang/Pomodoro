@@ -85,7 +85,7 @@ export function init() {
     isWorking = true;
     paintStatus('Working');
 
-    intervalId = setInterval(checkTimerEnd,100)
+    intervalId = setInterval(checkTimerEnd,1000)
     stopButton.addEventListener('click', stop);
 
     timer.set(workingTime,isWorking);
