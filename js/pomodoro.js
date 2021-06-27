@@ -1,9 +1,12 @@
 import Timer from './timer.js';
 import {show as showSetting} from './setting.js';
 
+const main = document.querySelector('main');
 const pomodoro = document.querySelector('#pomodoro');
 const status = pomodoro.querySelector('#status')
 const stopButton = pomodoro.querySelector('.button-container #stop');
+
+const POMODORO_MODE_CLASSNAME = 'pomodoro';
 
 let workingTime = 0;
 let restingTime = 0;
@@ -15,10 +18,8 @@ let intervalId = null;
 
 const timer = new Timer();
 
-const beep = new Audio();
-beep.src = 'audio/beep.mp3';
-const endSound = new Audio();
-endSound.src = 'audio/end.wav';
+const beep = new Audio('audio/beep.mp3');
+const endSound = new Audio('audio/end.wav');
 
 function restartTimer() {
     timer.stop();
@@ -33,8 +34,13 @@ function restartTimer() {
     timer.play();
 }
 
-function paintStatus(text) {
-    status.textContent = `${text}`;
+function paintStatus() {
+    if(isWorking) {
+        status.textContent = 'WORKING';
+    }
+    else{
+        status.textContent = 'RESTING';
+    } 
 }
 
 function end() {
@@ -52,7 +58,7 @@ function changeStatus() {
 
     beep.currentTime = 2;
     beep.play();
-    paintStatus(isWorking?'Working':'Resting');
+    paintStatus();
     restartTimer();
 }
 
@@ -68,13 +74,14 @@ function checkTimerEnd() {
 function stop() {
     timer.stop();
 
+    main.classList.remove(POMODORO_MODE_CLASSNAME);
     currentCount = 0;
     clearInterval(intervalId);
     pomodoro.hidden = true;
     showSetting();
 }
 
-export function init() {
+export function init() { 
     const localStorageData = localStorage.getItem('time');
     const settingTime = JSON.parse(localStorageData);
 
@@ -83,7 +90,9 @@ export function init() {
     goalCount = Number(settingTime.goalCount);
 
     isWorking = true;
-    paintStatus('Working');
+    paintStatus();
+
+    main.classList.add(POMODORO_MODE_CLASSNAME);
 
     intervalId = setInterval(checkTimerEnd,1000)
     stopButton.addEventListener('click', stop);

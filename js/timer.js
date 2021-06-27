@@ -69,7 +69,7 @@ export default class Timer {
 
     paintTime() {
         this.renderRemainTime();
-        totalTimeDisplay.textContent = `( ${this.totalTime} : 00 )`;
+        totalTimeDisplay.textContent = `총 ${this.totalTime}분`;
     }
 
     paintRemainFins(isWorking) {
@@ -101,7 +101,7 @@ function paintLines() {
         if (i%5 == 0) {
             line.classList.add('thick')
         }
-
+        
         lines.append(line);
     }
 }
