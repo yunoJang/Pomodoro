@@ -16,9 +16,9 @@ let intervalId = null;
 const timer = new Timer();
 
 const beep = new Audio();
-beep.src = './../audio/beep.mp3';
+beep.src = 'audio/beep.mp3';
 const endSound = new Audio();
-endSound.src = './../audio/end.wav';
+endSound.src = 'audio/end.wav';
 
 function restartTimer() {
     timer.stop();
@@ -85,7 +85,7 @@ export function init() {
     isWorking = true;
     paintStatus('Working');
 
-    intervalId = setInterval(checkTimerEnd,1000)
+    intervalId = setInterval(checkTimerEnd,100)
     stopButton.addEventListener('click', stop);
 
     timer.set(workingTime,isWorking);

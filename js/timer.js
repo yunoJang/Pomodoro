@@ -46,7 +46,7 @@ export default class Timer {
 
     play() {
         this.isPlay = true;
-        this.intervalID = setInterval(this.tickSecond.bind(this),1000)
+        this.intervalID = setInterval(this.tickSecond.bind(this),100)
         control.innerHTML = `<i class="fas fa-pause"></i>`;
     }
     
