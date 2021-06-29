@@ -1,0 +1,107 @@
+
+.recent-container {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+}
+.recent-container h1 {
+    font-weight: bold;
+}
+
+.recent-container header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* button */
+.recent-container header input+label {
+    display: block;
+    width: 1.4em;
+    height: 1.4em;
+    position: relative;
+    cursor: pointer;
+}
+    .recent-container header input+label>span {
+        display: block;
+        position: absolute;
+        width: 53%;
+        height: 2px;
+        border-radius: 30px;
+        background: #000;
+        transition: .25s;
+    }
+    .recent-container header input+label>span:first-child {
+        top: 50%;
+        left: 10%;
+        transform:rotate(-45deg) ;
+    }
+    .recent-container header input+label>span:last-child {
+        top: 50%;
+        left: 45%;
+        transform:rotate(45deg) ;
+    }
+
+    /* checked */
+    .recent-container header input:checked +label>span:first-child {
+        top: 50%;
+        left: 10%;
+        transform:rotate(45deg) ;
+    }
+    .recent-container header input:checked +label>span:last-child {
+        top: 50%;
+        left: 45%;
+        transform:rotate(-45deg) ;
+    }
+
+
+
+.setting-list {
+    flex-grow: 1;
+    margin-top: 1em;
+
+    display: flex;
+}
+    .setting-list.empty {
+        justify-content: center;
+        align-items: center;
+        height: 5em;
+    }
+
+.recent-container .setting-list>li {
+    font-size: 15px;
+    width: calc(100% / 3);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    
+    padding: .5em;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
+
+    cursor: pointer;
+}
+    .recent-container .setting-list>li+li { 
+        margin-left: .5em;
+    }
+    .recent-container .setting-list>li:hover {
+        transition: background .15s;
+        background: rgb(244, 244, 244);
+    }
+
+.recent-container .setting-list>li>h1 {
+    margin-bottom: .8em;
+}
+
+.recent-container .setting-content {
+    padding: 0 .3em;
+}
+.recent-container .setting-content div {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+    .recent-container .setting-content div+div {
+        margin-top: .4em;
+    }

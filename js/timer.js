@@ -11,7 +11,7 @@ export default class Timer {
         this.progressTimeSec = 0;
         this.intervalId = null;
 
-        controlButton.addEventListener('click', this.clickControl.bind(this));
+        controlButton.addEventListener('click', this.onClickControl.bind(this));
     }
 
     set(time,isWorking) {
@@ -21,7 +21,7 @@ export default class Timer {
         this.paintTime();
     }
 
-    clickControl() {
+    onClickControl() {
         if(this.isPlay) this.pause();
         else this.play();
     }

@@ -19,68 +19,84 @@
     </div>
 
     <main>
-        <form id="name-form" class="name-form" hidden>
-            <input type="text" placeholder="What is your name?">
-        </form>
-        
-        <div id="greeting" class="greeting" hidden>
-            <h1 id="title"></h1> 
-        </div>
-
-        <div id="setting" hidden>
-
-            <form id="setting-form" class="setting-form">
-                    
-                <div class="setting-times">
-                        
-                    <div class="working">
-                        <label>Working Time : </label> 
-                        <div>
-                            <input 
-                                required
-                                type="text" 
-                                id="working" 
-                                value="25"
-                            >
-                            <span>Min</span>
-                        </div>
-                    </div>
-                    
-                    <div class="resting">
-                        <label>Resting Time : </label>
-                        <div>
-                            <input 
-                                required
-                                type="text" 
-                                id="resting" 
-                                value="5"
-                            >
-                            <span>Min</span>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="goal">
-                        <label>Goal Count : </label>
-                        <div>
-                            <input type="text" id="goal" value="1">
-                            <span>Cnt</span>
-                        </div>
-                    </div>
-                    
-                </div>
-
-                <input type="submit" value="Start">
-            
+        <div id="setting-container" hidden>
+            <form id="name-form" class="name-form" hidden>
+                <input type="text" placeholder="What is your name?">
             </form>
+            
+            <div id="greeting" class="greeting" hidden>
+                <h1 id="title"></h1> 
+            </div>
 
-            <div id="time-result" class="time-results">
-                <div> 
-                    <span>🕑</span> <span id="total-time"></span> 
+            <div>
+                <form id="setting-form" class="setting-form">
+                        
+                    <div class="setting-times">
+                            
+                        <div class="working">
+                            <label>Working Time : </label> 
+                            <div>
+                                <input 
+                                    required
+                                    type="text" 
+                                    id="working" 
+                                    value="25"
+                                >
+                                <span>Min</span>
+                            </div>
+                        </div>
+                        
+                        <div class="resting">
+                            <label>Resting Time : </label>
+                            <div>
+                                <input 
+                                    required
+                                    type="text" 
+                                    id="resting" 
+                                    value="5"
+                                >
+                                <span>Min</span>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="goal">
+                            <label>Goal Count : </label>
+                            <div>
+                                <input type="text" id="goal" value="1">
+                                <span>Cnt</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <input type="submit" value="Start">
+                
+                </form>
+
+                <div id="time-result" class="time-results">
+                    <div> 
+                        <span>🕑</span> <span id="total-time"></span> 
+                    </div>
+                    <div> 
+                        <span>🚩</span> <span id="end-time"></span>
+                    </div>
                 </div>
-                <div> 
-                    <span>🚩</span> <span id="end-time"></span>
-                </div>
+
+            </div>
+
+            <div id="recent" class="recent-container">
+                <header>
+                    <h1>Recent - Setting</h1>
+                    <input type="checkbox" id="toggle" hidden></input>
+                    <label for="toggle">
+                        <span></span>
+                        <span></span>
+                    </label>
+                </header>
+
+                <ul id="setting-list" class="setting-list">
+                </ul>
             </div>
 
         </div>
@@ -109,8 +125,8 @@
             </div>
 
             <div class="time-container">
-                <div id="remain-time" class="remain-time">39 : 50</div>
-                <div id="total-time" class="total-time">(40M)</div>
+                <div id="remain-time" class="remain-time"></div>
+                <div id="total-time" class="total-time"></div>
             </div>
 
             <div class="button-container">

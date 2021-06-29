@@ -41,11 +41,6 @@ function loadName() {
     }
 }
 
-export function hide() {
-    form.hidden = true;
-    greetingContainer.hidden = true;
-}
-
 export function init() {
     loadName();
 }

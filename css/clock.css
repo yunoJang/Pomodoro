@@ -1,0 +1,23 @@
+.clock {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 15px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}
+.clock h1 {
+    font-size: 3em;
+}
+.clock .clock-ampm {
+    font-size: 20px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    color: rgba(0, 0, 0, 0.3);
+}
+    .clock-ampm span.active {
+        color: rgba(0, 0, 0, 1);
+    }

@@ -1,7 +1,8 @@
-import {hide as hideGreeting, init as initGreeting} from './greeting.js';
+import {init as initGreeting} from './greeting.js';
+import {init as initRecent} from './recent.js';
 import {show as showPomodoro, init as initPomodoro} from './pomodoro.js';
 
-const setting = document.querySelector('#setting');
+const setting = document.querySelector('#setting-container');
 const form = document.querySelector('#setting-form'),
     working = form.querySelector('#working'),
     resting = form.querySelector('#resting'),
@@ -9,6 +10,8 @@ const form = document.querySelector('#setting-form'),
 const timeResult = document.querySelector('#time-result'),
     total = timeResult.querySelector('#total-time'),
     end = timeResult.querySelector('#end-time');
+
+const RECENT_SETTING_LS = 'recent-setting';
 
 function renderEndTime(totalTime) {
     const endDate = new Date(Date.now()+(totalTime*60000));
@@ -76,25 +79,72 @@ function saveTime() {
         goalCount : goal.value,
     }
 
-    localStorage.setItem('time',JSON.stringify(time));
+    localStorage.setItem('current-setting',JSON.stringify(time));
 }
 
-function onSubmit(e) {
+function indexOfObject(arr,find) {
+    arrLoop:
+    for (const index in arr) {
+        const object = arr[index];
+
+        for (const [key,value] of Object.entries(object)) {
+            // not same
+            if (find[key] != value) continue arrLoop;
+        } 
+        // all same
+        return index;
+    }
+
+    return -1;
+}
+
+function saveSetting() {
+    const now = {
+        working : working.value,
+        resting : resting.value,
+        goalCount : goal.value,
+    }
+
+    const settings = JSON.parse(localStorage.getItem(RECENT_SETTING_LS)) ?? [];
+    const index = indexOfObject(settings,now);
+
+    // included in settings
+    if (index != -1) {
+        settings.splice(index,1);
+        settings.unshift(now);
+    }
+    // not included in settings
+    else {
+        if(settings.length > 2) settings.pop();
+        settings.unshift(now);
+    }
+
+    localStorage.setItem(RECENT_SETTING_LS,JSON.stringify(settings));
+}
+
+export function onSubmit(e) {
     e.preventDefault();
 
     saveTime();
+    saveSetting();
 
     hide();
-    hideGreeting();
 
     initPomodoro();
     showPomodoro();
 }
 
+export function setTime(time) {
+    working.value = time.working;
+    resting.value = time.resting;
+    goal.value = time.goalCount;
+}
+
 export function show() {
     initGreeting();
+    initRecent();
+
     renderResult();
-    
     setting.hidden = false;
 }
 
@@ -102,22 +152,9 @@ export function hide() {
     setting.hidden = true;
 }
 
-if (form) {
-    form.addEventListener('submit',onSubmit);
-}
+form.addEventListener('submit',onSubmit);
+working.addEventListener('input',onInput)
+resting.addEventListener('input',onInput)
+goal.addEventListener('input', onInputGoal)
 
-if (timeResult) {
-    renderResult();
-}
-
-if (working) {
-    working.addEventListener('input',onInput)
-}
-
-if (resting) {
-    resting.addEventListener('input',onInput)
-}
-
-if (goal) {
-    goal.addEventListener('input', onInputGoal)
-}
+renderResult();

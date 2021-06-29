@@ -48,6 +48,11 @@ function end() {
     stop();
 }
 
+function ringBeep() {
+    beep.currentTime = 5;
+    beep.play();
+}
+
 function changeStatus() {
     isWorking = !isWorking;
 
@@ -56,8 +61,8 @@ function changeStatus() {
         return;
     }
 
-    beep.currentTime = 2;
-    beep.play();
+    ringBeep();
+
     paintStatus();
     restartTimer();
 }
@@ -82,12 +87,12 @@ function stop() {
 }
 
 export function init() { 
-    const localStorageData = localStorage.getItem('time');
-    const settingTime = JSON.parse(localStorageData);
+    const data = localStorage.getItem('current-setting');
+    const currentSetting = JSON.parse(data);
 
-    workingTime = Number(settingTime.working);
-    restingTime = Number(settingTime.resting);
-    goalCount = Number(settingTime.goalCount);
+    workingTime = Number(currentSetting.working);
+    restingTime = Number(currentSetting.resting);
+    goalCount = Number(currentSetting.goalCount);
 
     isWorking = true;
     paintStatus();
