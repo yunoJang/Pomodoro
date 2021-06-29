@@ -5,7 +5,7 @@ const toggle = recent.querySelector('#toggle');
 const list = recent.querySelector('#setting-list');
 
 const SETTING_LS = 'recent-setting';
-const EMOJI = {'working':'✍', 'resting':'🛌', 'goalCount':'🚩'};
+const EMOJI = {'working':'✍🏻', 'resting':'🛌', 'goalCount':'🚩'};
 
 let recentSettings = [];
 
