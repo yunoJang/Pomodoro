@@ -55,13 +55,13 @@ function paintSettings() {
     }
 
     if(recentSettings.length > 0) {
-        recentSettings.forEach(createList);
         list.classList.remove('empty');
+
+        recentSettings.forEach(createList);
     }
     else {
-        list.hidden = true;
-        list.textContent = 'no recent setting';
         list.classList.add('empty');
+        list.textContent = 'no recent setting';
     }
 }
 
