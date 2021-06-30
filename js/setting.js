@@ -134,10 +134,10 @@ export function onSubmit(e) {
     showPomodoro();
 }
 
-export function setTime(time) {
-    working.value = time.working;
-    resting.value = time.resting;
-    goal.value = time.goalCount;
+export function setTime(setting) {
+    working.value = setting.working;
+    resting.value = setting.resting;
+    goal.value = setting.goalCount;
 }
 
 export function show() {

@@ -2,85 +2,84 @@ import {setTime, onSubmit} from './setting.js';
 
 const recent = document.querySelector('#recent');
 const toggle = recent.querySelector('#toggle');
-const list = recent.querySelector('#setting-list');
+const settingList = recent.querySelector('#setting-list');
 
 const SETTING_LS = 'recent-setting';
 const EMOJI = {'working':'✍🏻', 'resting':'🛌', 'goalCount':'🚩'};
 
 let recentSettings = [];
 
-function onClickRecentSet(e) {
-    const list = e.target.closest('li');
-    const id = list.dataset.id;
+class Setting{
+    constructor(setting, index) {
+        const li = document.createElement('li');
+        li.addEventListener('click', e=> {
+            setTime(recentSettings[index]);
+            onSubmit(e);
+        });
 
-    setTime(recentSettings[id]);
-    onSubmit(e);
-}
+        this.head = document.createElement('h1');
+        this.head.textContent = `# ${Number(index)+1}`;
+    
+        this.content = document.createElement('div');
+        this.content.classList.add('setting-content');
+        
+        for(const [key,value] of Object.entries(setting)) {
+            this.paintContent(key,value);
+        }
+    
+        li.append(this.head,this.content);
 
-function paintContent(content,key,value) {
-    const div = document.createElement('div');
-
-    const spanEmoji = document.createElement('span');
-    spanEmoji.textContent = EMOJI[key];
-
-    const spanTime = document.createElement('span');
-    spanTime.textContent = value;
-
-    if(key == 'working' || key == 'resting') {
-        spanTime.textContent += 'M';
+        this.appendList(li);
     }
 
-    div.append(spanEmoji,spanTime);
-    content.append(div);
+    appendList(li) {
+        settingList.append(li);
+    }
+    
+    paintContent(key,value) {
+        const div = document.createElement('div');
+    
+        const spanEmoji = document.createElement('span');
+        spanEmoji.textContent = EMOJI[key];
+    
+        const spanTime = document.createElement('span');
+        spanTime.textContent = value;
+    
+        if(key == 'working' || key == 'resting') {
+            spanTime.textContent += 'M';
+        }
+    
+        div.append(spanEmoji,spanTime);
+        this.content.append(div);
+    }
 }
 
 function paintSettings() {
-    const createList = (set,i)=> {
-        const li = document.createElement('li');
-        li.dataset.id = i;
-        li.addEventListener('click', onClickRecentSet);
-
-        const h1 = document.createElement('h1');
-        h1.textContent = `#${Number(i)+1}`;
-    
-        const content = document.createElement('div');
-        content.classList.add('setting-content');
-        
-        for(const [key,value] of Object.entries(set)) {
-            paintContent(content,key,value);
-        }
-    
-        li.append(h1,content);
-        list.append(li);
-    }
-
     if(recentSettings.length > 0) {
-        list.classList.remove('empty');
-
-        recentSettings.forEach(createList);
+        settingList.classList.remove('empty');
+        recentSettings.forEach((v, i)=> new Setting(v,i));
     }
     else {
-        list.classList.add('empty');
-        list.textContent = 'no recent setting';
+        settingList.classList.add('empty');
+        settingList.textContent = 'no recent setting';
     }
 }
 
 function clearSettings() {
-    list.innerHTML = '';
+    settingList.innerHTML = '';
 }
 
 function loadSetting() {
-    const settings = JSON.parse(localStorage.getItem(SETTING_LS)) ?? [];
-    recentSettings = settings;
+    const data = JSON.parse(localStorage.getItem(SETTING_LS)) ?? [];
+    recentSettings = data;
 
     clearSettings();
     paintSettings();
 }
 
 function onClickToggle() {
-    list.hidden = !list.hidden;
+    settingList.hidden = !settingList.hidden;
 }
-
 
 export function init() {
     loadSetting();
