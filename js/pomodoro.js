@@ -5,6 +5,7 @@ const main = document.querySelector('main');
 const pomodoro = document.querySelector('#pomodoro');
 const status = pomodoro.querySelector('#status')
 const stopButton = pomodoro.querySelector('.button-container #stop');
+const count = pomodoro.querySelector('#count-display');
 
 const POMODORO_MODE_CLASSNAME = 'pomodoro';
 
@@ -62,7 +63,7 @@ function changeStatus() {
     }
 
     ringBeep();
-
+    paintCount();
     paintStatus();
     restartTimer();
 }
@@ -86,6 +87,10 @@ function stop() {
     showSetting();
 }
 
+function paintCount() {
+    count.textContent = `${currentCount+1} / ${goalCount}`;
+}
+
 export function init() { 
     const data = localStorage.getItem('current-setting');
     const currentSetting = JSON.parse(data);
@@ -94,10 +99,11 @@ export function init() {
     restingTime = Number(currentSetting.resting);
     goalCount = Number(currentSetting.goalCount);
 
+    main.classList.add(POMODORO_MODE_CLASSNAME);
+
     isWorking = true;
     paintStatus();
-
-    main.classList.add(POMODORO_MODE_CLASSNAME);
+    paintCount();
 
     intervalId = setInterval(checkTimerEnd,1000)
     stopButton.addEventListener('click', stop);
