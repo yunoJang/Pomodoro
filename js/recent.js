@@ -78,7 +78,14 @@ function loadSetting() {
 }
 
 function onClickToggle() {
-    settingList.hidden = !settingList.hidden;
+    if (settingList.hidden) {
+        settingList.classList.add('show');
+        settingList.hidden = false;
+    }
+    else {
+        settingList.classList.remove('show');
+        settingList.hidden = true;
+    }
 }
 
 export function init() {

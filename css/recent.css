@@ -28,7 +28,7 @@
         height: 2px;
         border-radius: 30px;
         background: #000;
-        transition: .25s;
+        transition: .3s;
     }
     .recent-container header input+label>span:first-child {
         top: 50%;
@@ -53,6 +53,31 @@
         transform:rotate(-45deg) ;
     }
 
+@keyframes show {
+    from {
+        margin-top: 0px;
+        transform: scaleY(0);
+        opacity: .5;
+    }
+    to {
+        margin-top: 1em;
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    from {
+        margin-top: 1em;
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    to {
+        margin-top: 0px;
+        transform: scaleY(0);
+        opacity: .5;
+    }
+}
 
 .setting-list {
     font-family: 'Roboto', sans-serif;
@@ -60,7 +85,15 @@
     margin-top: 1em;
 
     display: flex;
+    transform-origin: top;
+    overflow: hidden;
 }
+    .setting-list.show {
+        animation: show .3s cubic-bezier(0,0,0,1);
+    }
+    .setting-list.hide {
+        animation: hide .3s cubic-bezier(0,0,0,1);
+    }
     .setting-list.empty {
         justify-content: center;
         align-items: center;
@@ -87,7 +120,7 @@
     }
     .recent-container .setting-list>li:hover {
         transition: background .15s;
-        background: rgb(244, 244, 244);
+        background: rgb(240, 240, 240);
     }
 
 .recent-container .setting-list>li>h1 {
@@ -104,3 +137,4 @@
     .recent-container .setting-content div+div {
         margin-top: .4em;
     }
+
