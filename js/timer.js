@@ -11,7 +11,12 @@ export default class Timer {
         this.currentTime = 0;
         this.intervalId = null;
 
-        controlButton.addEventListener('click', this.onClickControl.bind(this));
+        controlButton.addEventListener('click', this.onClickControl);
+    }
+    
+    onClickControl = ()=> {
+        if(this.isPlay) this.pause();
+        else this.play();
     }
 
     set(time,isWorking) {
@@ -19,11 +24,6 @@ export default class Timer {
         this.currentTime = 0;
         this.paintRemainFins(isWorking);
         this.paintTime();
-    }
-
-    onClickControl() {
-        if(this.isPlay) this.pause();
-        else this.play();
     }
 
     stop() {
@@ -35,7 +35,7 @@ export default class Timer {
         }
     }
 
-    tickSecond() {
+    tickSecond = ()=> {
         this.currentTime++;
 
         const lastFin = fins.lastChild;
@@ -46,7 +46,7 @@ export default class Timer {
 
     play() {
         this.isPlay = true;
-        this.intervalID = setInterval(this.tickSecond.bind(this),1000)
+        this.intervalID = setInterval(this.tickSecond,1000)
         control.innerHTML = `<i class="fas fa-pause"></i>`;
     }
     
