@@ -46,7 +46,7 @@ function renderResult() {
 function onInput(e) {
     const value = Number(e.target.value);
 
-    if(!Number.isInteger(value)) {
+    if(isNaN(value)) {
         e.target.value = 0;
     }
     else if (value > 60) {
@@ -62,8 +62,8 @@ function onInput(e) {
 function onInputGoal(e) {
     const value = Number(goal.value);
 
-    if(!Number.isInteger(value)) {
-        goal.value = 0;
+    if(isNaN(value) || value < 1) {
+        goal.value = 1;
     } 
     else if(value >= 100) {
         goal.value = 99;
