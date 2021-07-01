@@ -11,56 +11,58 @@ let recentSettings = [];
 
 class Setting{
     constructor(setting, index) {
-        const li = document.createElement('li');
-        li.addEventListener('click', e=> {
-            setTime(recentSettings[index]);
-            onSubmit(e);
-        });
+        this.setting = setting;
+        this.index = index;
 
-        this.head = document.createElement('h1');
-        this.head.textContent = `# ${Number(index)+1}`;
+        this.dom = document.createElement('li');
+        this.dom.addEventListener('click', this.onClickSetting);
+
+        const head = document.createElement('h1');
+        head.textContent = `# ${Number(index)+1}`;
     
-        this.content = document.createElement('div');
-        this.content.classList.add('setting-content');
+        const content = document.createElement('div');
+        content.classList.add('setting-content');
+        this.paintContent(content);
+    
+        this.dom.append(head,content);
+    }
+
+    onClickSetting = e=> {
+        setTime(recentSettings[this.index]);
+        onSubmit(e);
+    }
+
+    paintContent(content) {
+        for(const [key,value] of Object.entries(this.setting)) {
+            const div = document.createElement('div');
         
-        for(const [key,value] of Object.entries(setting)) {
-            this.paintContent(key,value);
+            const spanEmoji = document.createElement('span');
+            spanEmoji.textContent = EMOJI[key];
+        
+            const spanValue = document.createElement('span');
+            spanValue.textContent = value;
+        
+            if(key == 'working' || key == 'resting') {
+                spanValue.textContent += '분';
+            }
+            else if (key == 'goalCount') {
+                spanValue.textContent += '회';
+            }
+        
+            div.append(spanEmoji,spanValue);
+            content.append(div);
         }
-    
-        li.append(this.head,this.content);
-
-        this.appendList(li);
     }
 
-    appendList(li) {
-        settingList.append(li);
-    }
-    
-    paintContent(key,value) {
-        const div = document.createElement('div');
-    
-        const spanEmoji = document.createElement('span');
-        spanEmoji.textContent = EMOJI[key];
-    
-        const spanTime = document.createElement('span');
-        spanTime.textContent = value;
-    
-        if(key == 'working' || key == 'resting') {
-            spanTime.textContent += '분';
-        }
-        else if (key == 'goalCount') {
-            spanTime.textContent += '회';
-        }
-    
-        div.append(spanEmoji,spanTime);
-        this.content.append(div);
-    }
 }
 
-function paintSettings() {
+function paintSettingList() {
     if(recentSettings.length > 0) {
         settingList.classList.remove('empty');
-        recentSettings.forEach((v, i)=> new Setting(v,i));
+        recentSettings.forEach((v, i)=> {
+            const setting = new Setting(v,i);
+            settingList.append(setting.dom);
+        });
     }
     else {
         settingList.classList.add('empty');
@@ -68,7 +70,7 @@ function paintSettings() {
     }
 }
 
-function clearSettings() {
+function clearSettingList() {
     settingList.innerHTML = '';
 }
 
@@ -76,8 +78,8 @@ function loadSetting() {
     const data = JSON.parse(localStorage.getItem(SETTING_LS)) ?? [];
     recentSettings = data;
 
-    clearSettings();
-    paintSettings();
+    clearSettingList();
+    paintSettingList();
 }
 
 function onClickToggle() {
