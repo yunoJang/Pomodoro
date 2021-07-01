@@ -8,7 +8,7 @@ const totalTimeDisplay = document.querySelector('.time-container #total-time');
 
 export default class Timer {
     constructor() {
-        this.progressTimeSec = 0;
+        this.currentTime = 0;
         this.intervalId = null;
 
         controlButton.addEventListener('click', this.onClickControl.bind(this));
@@ -16,7 +16,7 @@ export default class Timer {
 
     set(time,isWorking) {
         this.totalTime = time;
-        this.progressTimeSec = 0;
+        this.currentTime = 0;
         this.paintRemainFins(isWorking);
         this.paintTime();
     }
@@ -36,7 +36,7 @@ export default class Timer {
     }
 
     tickSecond() {
-        this.progressTimeSec++;
+        this.currentTime++;
 
         const lastFin = fins.lastChild;
         if (lastFin) lastFin.remove();
@@ -57,7 +57,7 @@ export default class Timer {
     }
 
     renderRemainTime() {
-        const totalSec = this.totalTime * 60 - this.progressTimeSec;
+        const totalSec = this.totalTime * 60 - this.currentTime;
         const min = Math.floor(totalSec/60);
         const sec = totalSec % 60;
 
