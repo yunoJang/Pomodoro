@@ -46,7 +46,10 @@ class Setting{
         spanTime.textContent = value;
     
         if(key == 'working' || key == 'resting') {
-            spanTime.textContent += 'M';
+            spanTime.textContent += '분';
+        }
+        else if (key == 'goalCount') {
+            spanTime.textContent += '회';
         }
     
         div.append(spanEmoji,spanTime);
