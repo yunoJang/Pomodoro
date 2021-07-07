@@ -35,8 +35,8 @@ function restartTimer() {
     timer.play();
 }
 
-function paintStatus(status) {
-    status.textContent = status.toUpperCase();
+function paintStatus(text) {
+    status.textContent = text.toUpperCase();
 }
 
 function end() {
