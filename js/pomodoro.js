@@ -35,13 +35,8 @@ function restartTimer() {
     timer.play();
 }
 
-function paintStatus() {
-    if(isWorking) {
-        status.textContent = 'WORKING';
-    }
-    else{
-        status.textContent = 'RESTING';
-    } 
+function paintStatus(status) {
+    status.textContent = status.toUpperCase();
 }
 
 function end() {
@@ -64,7 +59,7 @@ function changeStatus() {
 
     ringBeep();
     paintCount();
-    paintStatus();
+    paintStatus(isWorking?'working':'resting');
     restartTimer();
 }
 
@@ -102,7 +97,7 @@ export function init() {
     main.classList.add(POMODORO_MODE_CLASSNAME);
 
     isWorking = true;
-    paintStatus();
+    paintStatus(isWorking?'working':'resting');
     paintCount();
 
     intervalId = setInterval(checkTimerEnd,1000)
